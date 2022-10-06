@@ -18,6 +18,24 @@ state = {
     ],
     filter: '',
 };
+    
+    componentDidMount() {
+        const contact = localStorage.getItem('contacts')
+        const parseContacts = JSON.parse(contact)
+        if (parseContacts) {
+            this.setState(
+                {contacts: parseContacts}
+            )
+        }
+    }
+
+    componentDidUpdate(prevProp, prevState) {
+        const value = JSON.stringify(this.state.contacts)
+        if (prevState.contacts !== this.state.contacts) {
+        localStorage.setItem('contacts', value)
+        }
+    }
+
 onAddContact = ({ name, number }) => {
     const normalizedName = name.toLowerCase();
     if (
